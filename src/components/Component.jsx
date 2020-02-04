@@ -378,12 +378,21 @@ export class Tabulator extends React.PureComponent{
   }
 
   createRows(index){
+    const { fkColName, foreignKey } = this.props;
     let data = {};
     let temp = {
       html: [...this.state.rows.html],
       index: [...this.state.rows.index],
     };
-    data[this.props.fkColName || "Title"] = this.props.foreignKey;
+    // check if supplied fkcolname is a string or array
+    if(typeof(fkColName)==="object"){
+      fkColName.map(({name, value})=>{
+        data[name] = value;
+      });
+    } else {
+      data[fkColName || "Title"] = foreignKey;
+    }
+    // push the current index and html to temp array
     temp.index.push(index);
     temp.html.push(
       <tr key={index}>

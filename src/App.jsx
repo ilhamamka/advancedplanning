@@ -133,7 +133,7 @@ class App extends React.Component {
     this.turnaroundmode=['Project Ride on TA', 'Project Drive TA'];
     this.typeCompletion = ['RFSU', 'MCD', 'IA', 'CCC']; 
     this.contractMode = ['Engineering Consultancy', 'In-House Engineering', 'EPCC', 'PCC', 'PC', 'Procurement', 'EP', 'GMP', 'CTMS'];
-    this.acivitySchedule = ['FEL 1', 'FEL 2', 'FEL 3', 'Tendering', 'Detailed Engineering', 'Procurement', 'Pre-Fabrication', 'Construction', 'Commissioning', 'Close-Out', 'MCD', 'RFSU', 'IA', 'CCC'];
+    this.acivitySchedule = ['FEL 1', 'FEL 2', 'FEL 3', 'Land Acquisition/Regulatory Approval', 'Tendering', 'Detailed Engineering', 'Procurement', 'Pre-Fabrication', 'Construction', 'Installation', 'Commissioning', 'Close-Out'];
     this.awardMode = ['Proprietary', 'Open-Bid', 'Single Source', 'Umbrella'];
     //this.companycode = ['PETRONAS Chemical Group - 501', 'Asean Bintulu Fertiliser Sdn Bhd - 005', 'PETRONAS Chemicals Fertilizer Kedah Sdn Bhd - 008', 'PETRONAS Chemicals Marketing Sdn Bhd - 013', 'PETRONAS Chemicals Methanol Sdn Bhd - 016', 'PETRONAS Chemicals MTBE Sdn Bhd - 019', 'PETRONAS Chemicals Ethylene Sdn Bhd - 021', 'Polypropylene (M) Sdn Bhd - 028', 'PETRONAS Chemical Polyethylene Sdn Bhd - 029', 'Kertih Port Sdn Bhd - 045', 'Vinyle Chloride (Malaysia) Sdn Bhd - 077', 'Aromatics Malaysia Sdn Bhd - 081', 'PETRONAS Chemical Ammonia Sdn Bhd - 090', 'PETRONAS Chemicals Olefins Sdn Bhd - 126', 'PCM Chemicals India Private Limited - 306', 'PETRONAS Chemicals Marketing (LABUAN) Ltd - 375', 'PCM (China) Company Limited - 449', 'PCM (Thailand) Company Limited - 474', 'PETRONAS Chemicals Fertiliser Sabah Sdn Bhd - 491', 'PETRONAS Chemicals Derivatives Sdn Bhd - 502', 'PETRONAS Chemicals Glycols Sdn Bhd - 503', 'PETRONAS Chemicals  LDPE Sdn Bhd - 505', 'PETRONAS Dagangan Berhad - 002', 'PETRONAS Carigali Sdn Bhd - 003', 'Malaysia LNG Sdn Bhd (MLNG) - 004', 'PETRONAS Gas Berhad - 009', 'PETRONAS Penapisan Terengganu Sdn Bhd - 010', 'PETRONAS Penapisan (Melaka) Sdn Bhd (PP(M)SB) - 011', 'Malaysia Refining Company Sdn Bhd (MRCSB) - 020', 'PETRONAS Technical Services Sdn Bhd - 087', 'BASF - 111', 'PFLNG2 (L) LTD - 408', 'PRPC Elastomer Sdn Bhd - 460', 'PRPC Glycols Sdn Bhd - 461', 'PRPC Polymers Sdn Bhd - 463', 'PFLNG1 (L) LTD - 467', 'PETRONAS ICT Sdn Bhd - 704' ];
     this.projectphase = ['1-Feasibility Study (FEL)', '2-Engineering & Services (BED, DED, etc)', '3-Execution (EPCC, EPCM, BEPCC, etc)', '4-Procurement (LLI, Owner Purchased/Supplied, etc)', '5-Project Management & Supervision (iPMT, MSC, Specialist, etc)', '6-Oweners Cost (Pre-Operation etc)', '7-Others' ];
@@ -256,11 +256,11 @@ class App extends React.Component {
           <Row>
             <Col>
               <Tooltip content="Input the Project ID"><Textfield label={Title.dispName} bindTo={Title} getter={e=>{window.projectSchedule.Title.value = e; window.costCode.Title.value = e;}}/></Tooltip>
-              <Tooltip content="Choose the project business unit"><Dropdown label={Business_x0020_Unit.dispName} bindTo={Business_x0020_Unit} getter={value=>{this.setUnit(value);this.setcompanyCode(value);}}  options={Business_x0020_Unit.choiceValues} /></Tooltip>
+              <Tooltip content="Choose the project business unit"><Dropdown label={Business_x0020_Unit.dispName} bindTo={Business_x0020_Unit} getter={value=>{this.setUnit(value);this.setcompanyCode(value); window.projectSchedule.Business_x0020_Unit.value = value; window.costCode.Business_x0020_Unit.value = value;}} options={Business_x0020_Unit.choiceValues} /></Tooltip>
               {
-                unit && <Multiselect label={OPU_x002f_Divison_x002f_Plant.dispName} bindTo={OPU_x002f_Divison_x002f_Plant} options={this.division[unit]} /> 
+                unit && <Multiselect label={OPU_x002f_Divison_x002f_Plant.dispName} bindTo={OPU_x002f_Divison_x002f_Plant} options={this.division[unit]} getter={value => {window.projectSchedule.OPU_x002f_Divison_x002f_Plant.setValue({results: value});}} /> 
               }
-              <Tooltip content="Input Project Name"><Textfield label={Project_x0020_Name.dispName} getter={e=>{window.costCode.Project_x0020_Name.value = e;}} bindTo={Project_x0020_Name} transform="capitalize" /></Tooltip>
+              <Tooltip content="Input Project Name"><Textfield label={Project_x0020_Name.dispName} getter={e=>{window.costCode.Project_x0020_Name.value = e; window.projectSchedule.Project_x0020_Name.value =e;}} bindTo={Project_x0020_Name} transform="capitalize" /></Tooltip>
               <Tooltip content="Input Project Objective"><Textfield label={Project_x0020_Objectives.dispName} bindTo={Project_x0020_Objectives} multiline /></Tooltip>
               <Tooltip content="Input Project Area"><Textfield label={Area.dispName} bindTo={Area} /></Tooltip>
               <Tooltip content="Input Project Unit"><Textfield label={Unit.dispName} bindTo={Unit} /></Tooltip>
@@ -287,15 +287,20 @@ class App extends React.Component {
 
           <Datepicker label={FID_x0020_Date.dispName} bindTo={FID_x0020_Date} formatted/>
           {(projectMode !== "NonTurnAround") && 
-          <Tabulator bindList={window.windowTA} foreignKey={window.projectBackground.Title} fkColName="Title" label="Window Start (TA/SD)">
+          <Tabulator bindList={window.windowTA} fkColName={[{name: "Title", value: Title}, {name:"Business_x0020_Unit", value:Business_x0020_Unit}, {name:"OPU_x002f_Divison_x002f_Plant", value: OPU_x002f_Divison_x002f_Plant}, {name:"Project_x0020_Name", value:Project_x0020_Name}]} label="Window Start (TA/SD)">
           <Datepicker label='Window Start' bindTo="Window_x0020_Start" formatted/>
           <Datepicker label='Window Finish' bindTo="Window_x0020_Finish" formatted/>
           </Tabulator>}
           <Row>
             <Col>
+            {/* <Tabulator bindList={vehicle} foreignKey={window.personalInfo.Title} fkColName="Title" label="Vehicle Information">
+                <Textfield label="Vehicle Brand/Type" bindTo="Brand_x0020__x0026__x0020_Type"  />
+                <Textfield label="Reg. No" bindTo="Registration_x0020_No" />
+                <Dropdown label="Type" bindTo="Vehicle_x0020_Type" options={vehicle.Vehicle_x0020_Type.choiceValues} />
+              </Tabulator> */}
             <Dropdown label={Type_x0020_of_x0020_Completion.dispName} bindTo={Type_x0020_of_x0020_Completion} options={Type_x0020_of_x0020_Completion.choiceValues} />
             <br/>
-            <Tabulator bindList={window.highLevelSchedule} foreignKey={window.projectBackground.Title} fkColName="Title" label="High Level Schedule">
+            <Tabulator bindList={window.highLevelSchedule} fkColName={[{name: "Title", value: Title}, {name:"Business_x0020_Unit", value:Business_x0020_Unit}, {name:"OPU_x002f_Divison_x002f_Plant", value: OPU_x002f_Divison_x002f_Plant}, {name:"Project_x0020_Name", value:Project_x0020_Name}]} label="High Level Schedule">
               <Dropdown label='Activity' bindTo="Activity" options={this.acivitySchedule} />
               <Datepicker label='Start Date'  bindTo= "Start_x0020_Date" formatted/>
               <Datepicker label='Finish Date'  bindTo="Finish_x0020_Date" formatted/>
@@ -304,13 +309,9 @@ class App extends React.Component {
             <Col>
             <Datepicker label={Project_x0020_Completion_x0020_D.dispName} bindTo={Project_x0020_Completion_x0020_D} formatted/>
             <br/>
-            {/* <Tabulator bindList={vehicle} foreignKey={window.personalInfo.Title} fkColName="Title" label="Vehicle Information">
-                <Textfield label="Vehicle Brand/Type" bindTo="Brand_x0020__x0026__x0020_Type"  />
-                <Textfield label="Reg. No" bindTo="Registration_x0020_No" />
-                <Dropdown label="Type" bindTo="Vehicle_x0020_Type" options={vehicle.Vehicle_x0020_Type.choiceValues} />
-              </Tabulator> */}
             
-            <Tabulator bindList={window.majorMilestone} foreignKey={window.projectBackground.Title} fkColName="Title" label="Major Milestone">
+            
+            <Tabulator bindList={window.majorMilestone} fkColName={[{name: "Title", value: Title}, {name:"Business_x0020_Unit", value:Business_x0020_Unit}, {name:"OPU_x002f_Divison_x002f_Plant", value: OPU_x002f_Divison_x002f_Plant}, {name:"Project_x0020_Name", value:Project_x0020_Name}]} label="Major Milestone">
               <Textfield label='Activity' placeholder="i.e LLI Arrival, Engineering Milestone, etc" bindTo="Activity" />
               <Datepicker label='Milestone Date' bindTo="Milestone_x0020_Date" formatted />
             </Tabulator>
@@ -694,7 +695,7 @@ class App extends React.Component {
         </Section>
 
         <Section label='5. PROJECT OCS'>
-          <Tabulator bindList={window.projectOCS} foreignKey={window.projectBackground.Title} fkColName="Title">
+          <Tabulator bindList={window.projectOCS} fkColName={[{name: "Title", value: Title}, {name:"Business_x0020_Unit", value:Business_x0020_Unit}, {name:"OPU_x002f_Divison_x002f_Plant", value: OPU_x002f_Divison_x002f_Plant}, {name:"Project_x0020_Name", value:Project_x0020_Name}]}>
             <Dropdown label='Contract Mode' options={this.contractMode} bindTo="Contract_x0020_Mode"/>
             <Dropdown label='Award Mode' options={this.awardMode} bindTo="Award_x0020_Mode" />
             <Textfield label='Vendor/Contractor' bindTo="Vendor_x002f_Contractor" />
@@ -702,7 +703,7 @@ class App extends React.Component {
         </Section>
 
         <Section label= '6. COMPANY SUPPLIED ITEM(this section is only applicable to item directly supplied by company)'>
-            <Tabulator bindList={window.companySuppliedItem} foreignKey={window.projectBackground.Title} fkColName="Title">
+            <Tabulator bindList={window.companySuppliedItem} fkColName={[{name: "Title", value: Title}, {name:"Business_x0020_Unit", value:Business_x0020_Unit}, {name:"OPU_x002f_Divison_x002f_Plant", value: OPU_x002f_Divison_x002f_Plant}, {name:"Project_x0020_Name", value:Project_x0020_Name}]}>
               <Textfield label='Item' bindTo="Item"/>
               <Textfield label='Cost Estimate' bindTo="Cost_x0020_Estimate" type='number'/>
               <Textfield label='Duration(Months)' bindTo="Duration_x0020__x0028_Months_x00" type='number'/>
@@ -714,7 +715,7 @@ class App extends React.Component {
           <Fileupload label="Upload Excel File" bindTo={window.folder} fileName={{value: "test"}}/>
         </Section>
 
-        <iframe width="933" height="700" src="https://app.powerbi.com/view?r=eyJrIjoiYmQ4MTg2MGUtMTZjZi00ZmUzLThhNzktMmQwNTQ1MGY5NGM4IiwidCI6IjE4Y2U3NmY2LTk5ZjQtNDU3Zi05ZjYyLWFjZDY1ZDliOTc3NyIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
+        
         
         <br />      
         <Button type="button" 

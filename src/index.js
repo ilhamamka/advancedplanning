@@ -28,35 +28,53 @@ let simulatedCols = {
     ],
     projectSchedule: [
         new DataObj("Title", "Project ID"),
+        new DataObj("Business_x0020_Unit", "Business Unit", ['PETRONAS Dagangan Berhad', 'PETRONAS Gas Berhad', 'PETRONAS Chemical Group', 'PETRONAS Refineries and Trading', 'PETRONAS LNG Asset']), //choice
+        new DataObj("OPU_x002f_Divison_x002f_Plant", "OPU/Divison/Plant"),
+        new DataObj("Project_x0020_Name", "Project Name"), 
         new DataObj("FID_x0020_Date", "FID Date"),  
         new DataObj("Type_x0020_of_x0020_Completion", "Type of Completion", ['RFSU', 'MCD', 'IA', 'CCC']), 
         new DataObj("Project_x0020_Completion_x0020_D", "Project Completion Date"), 
     ],
     windowTA: [
         new DataObj("Title", "Project ID"),
+        new DataObj("Business_x0020_Unit", "Business Unit", ['PETRONAS Dagangan Berhad', 'PETRONAS Gas Berhad', 'PETRONAS Chemical Group', 'PETRONAS Refineries and Trading', 'PETRONAS LNG Asset']), //choice
+        new DataObj("OPU_x002f_Divison_x002f_Plant", "OPU/Divison/Plant"),
+        new DataObj("Project_x0020_Name", "Project Name"),
         new DataObj("Window_x0020_Start", "Window Start"),
         new DataObj("Window_x0020_Finish", "Window Finish"),
     ],
     majorMilestone: [
         new DataObj("Title", "Project ID"),
+        new DataObj("Business_x0020_Unit", "Business Unit", ['PETRONAS Dagangan Berhad', 'PETRONAS Gas Berhad', 'PETRONAS Chemical Group', 'PETRONAS Refineries and Trading', 'PETRONAS LNG Asset']), //choice
+        new DataObj("OPU_x002f_Divison_x002f_Plant", "OPU/Divison/Plant"),
+        new DataObj("Project_x0020_Name", "Project Name"),
         new DataObj("Activity", "Activity"),
         new DataObj("Milestone_x0020_Date", "Milestone Date")
     ],
     highLevelSchedule: [
         new DataObj("Title", "Project ID"),
-        new DataObj("Activity", "Activity", ['FEL 1', 'FEL 2', 'FEL 3', 'Tendering', 'Detailed Engineering', 'Procurement', 'Pre-Fabrication', 'Construction', 'Commissioning', 'Close-Out', 'MCD', 'RFSU', 'IA', 'CCC']),
+        new DataObj("Business_x0020_Unit", "Business Unit", ['PETRONAS Dagangan Berhad', 'PETRONAS Gas Berhad', 'PETRONAS Chemical Group', 'PETRONAS Refineries and Trading', 'PETRONAS LNG Asset']), //choice
+        new DataObj("OPU_x002f_Divison_x002f_Plant", "OPU/Divison/Plant"),
+        new DataObj("Project_x0020_Name", "Project Name"),
+        new DataObj("Activity", "Activity", ['FEL 1', 'FEL 2', 'FEL 3', 'Land Acquisition/Regulatory Approval', 'Tendering', 'Detailed Engineering', 'Procurement', 'Pre-Fabrication', 'Construction', 'Installation', 'Commissioning', 'Close-Out', 'MCD', 'RFSU', 'IA', 'CCC']),
         new DataObj("Start_x0020_Date", "Start Date"),
         new DataObj("Finish_x0020_Date", "Finish Date"),
         new DataObj("Project_x0020_Schedule_x0020_Inf", "Project Schedule Info"),
     ],
     projectOCS: [
         new DataObj("Title", "Project ID"),
+        new DataObj("Business_x0020_Unit", "Business Unit", ['PETRONAS Dagangan Berhad', 'PETRONAS Gas Berhad', 'PETRONAS Chemical Group', 'PETRONAS Refineries and Trading', 'PETRONAS LNG Asset']), //choice
+        new DataObj("OPU_x002f_Divison_x002f_Plant", "OPU/Divison/Plant"),
+        new DataObj("Project_x0020_Name", "Project Name"),
         new DataObj("Contract_x0020_Mode", "Contract Mode", ['Engineering Consultancy', 'In-House Engineering', 'EPCC', 'PCC', 'PC', 'Procurement', 'EP', 'GMP', 'CTMS']), //add choices
         new DataObj("Award_x0020_Mode", "Award Mode", ['Proprietary', 'Open-Bid', 'Single Source']), //add choices
         new DataObj("Vendor_x002f_Contractor", "Vendor/Contractor")
     ],
     companySuppliedItem: [
         new DataObj("Title", "Project ID"),
+        new DataObj("Business_x0020_Unit", "Business Unit", ['PETRONAS Dagangan Berhad', 'PETRONAS Gas Berhad', 'PETRONAS Chemical Group', 'PETRONAS Refineries and Trading', 'PETRONAS LNG Asset']), //choice
+        new DataObj("OPU_x002f_Divison_x002f_Plant", "OPU/Divison/Plant"),
+        new DataObj("Project_x0020_Name", "Project Name"),
         new DataObj("Item", "Item"), 
         new DataObj("Cost_x0020_Estimate", "Cost Estimate"), 
         new DataObj("Duration_x0020__x0028_Months_x00", "Duration (Months)"), 
@@ -80,6 +98,8 @@ let simulatedCols = {
     ],
     costCode: [
         new DataObj("Title", "Project ID"),
+        new DataObj("Business_x0020_Unit", "Business Unit", ['PETRONAS Dagangan Berhad', 'PETRONAS Gas Berhad', 'PETRONAS Chemical Group', 'PETRONAS Refineries and Trading', 'PETRONAS LNG Asset']), //choice
+        new DataObj("OPU_x002f_Divison_x002f_Plant", "OPU/Divison/Plant"),
         new DataObj("Project_x0020_Name", "Project Name"), 
         new DataObj("Company_x0020_Code", "Company Code", ['PETRONAS Chemical Group - 501', 'Asean Bintulu Fertiliser Sdn Bhd - 005', 'PETRONAS Chemicals Fertilizer Kedah Sdn Bhd - 008', 'PETRONAS Chemicals Marketing Sdn Bhd - 013', 'PETRONAS Chemicals Methanol Sdn Bhd - 016', 'PETRONAS Chemicals MTBE Sdn Bhd - 019', 'PETRONAS Chemicals Ethylene Sdn Bhd - 021', 'Polypropylene (M) Sdn Bhd - 028', 'PETRONAS Chemical Polyethylene Sdn Bhd - 029', 'Kertih Port Sdn Bhd - 045', 'Vinyle Chloride (Malaysia) Sdn Bhd - 077', 'Aromatics Malaysia Sdn Bhd - 081', 'PETRONAS Chemical Ammonia Sdn Bhd - 090', 'PETRONAS Chemicals Olefins Sdn Bhd - 126', 'PCM Chemicals India Private Limited - 306', 'PETRONAS Chemicals Marketing (LABUAN) Ltd - 375', 'PCM (China) Company Limited - 449', 'PCM (Thailand) Company Limited - 474', 'PETRONAS Chemicals Fertiliser Sabah Sdn Bhd - 491', 'PETRONAS Chemicals Derivatives Sdn Bhd - 502', 'PETRONAS Chemicals Glycols Sdn Bhd - 503', 'PETRONAS Chemicals  LDPE Sdn Bhd - 505', 'PETRONAS Dagangan Berhad - 002', 'PETRONAS Carigali Sdn Bhd - 003', 'Malaysia LNG Sdn Bhd (MLNG) - 004', 'PETRONAS Gas Berhad - 009', 'PETRONAS Penapisan Terengganu Sdn Bhd - 010', 'PETRONAS Penapisan (Melaka) Sdn Bhd (PP(M)SB) - 011', 'Malaysia Refining Company Sdn Bhd (MRCSB) - 020', 'PETRONAS Technical Services Sdn Bhd - 087', 'BASF - 111', 'PFLNG2 (L) LTD - 408', 'PRPC Elastomer Sdn Bhd - 460', 'PRPC Glycols Sdn Bhd - 461', 'PRPC Polymers Sdn Bhd - 463', 'PFLNG1 (L) LTD - 467', 'PETRONAS ICT Sdn Bhd - 704' ]), //choice   
         new DataObj("Budget_x0020_Year", "Budget Year"), 
